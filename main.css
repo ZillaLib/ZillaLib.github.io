@@ -115,16 +115,8 @@ p { line-height: 1.4; }
 	line-height: 1.4em;
 }
 
-	.links a {
-		text-overflow: ellipsis;
-		width: 98%;
-		white-space: nowrap;
-		overflow: hidden;
-		display: block;
-	}
-
-	links a:hover, links a:active {
-		color: #f2f2f2 !important;
+	.links a:hover, .links a:active {
+		color: #fff !important;
 		text-decoration: underline;
 	}
 
