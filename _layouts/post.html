@@ -1,0 +1,47 @@
+---
+layout: default
+---
+
+<div class="main-content">
+	<article class="module color-5">
+		<h1>{{ page.title }}{{ .shortUrl }}</h1>
+		<hr>
+		{{ content }}
+		<p class="top"><small><a href="#top">[top]</a></small></p>
+	</article>
+
+{% comment %}
+	<div class="module social color-5">
+		<ul>
+			<li class="fb">
+			<a target="_blank" title="Share on Facebook" href="https://www.facebook.com/sharer/sharer.php?t={{ page.title }}&u={{ url }}">Facebook</a></li>
+			<li class="tw"><a target="_blank" title="Share on Twitter" href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ url }}&via={{ site.twitter }}&hashtags={{ tagStr }}">Twitter</a></li>
+			<li class="gp"><a target="_blank" title="Share on Google+" href="https://plus.google.com/share?url={{ url }}">Google+</a></li>
+		</ul>
+	</div>
+{% endcomment %}
+
+{% unless post.nocomments %}
+	<div class="module color-5">
+		<script type="text/javascript">
+			function LoadDisqus()
+			{
+				var btn = document.getElementById('disqus_loadbtn')
+				btn.parentElement.removeChild(btn);
+				document.getElementById('disqus_thread').style.display = "block";
+				var dsq = document.createElement('script');
+				dsq.type = 'text/javascript';
+				dsq.async = true;
+				dsq.src = '//zillalib.disqus.com/embed.js';
+				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+			}
+			document.write('<div id="disqus_thread"></div><div id="disqus_loadbtn"><input type="button" value="Show Disqus Comments &middot; Add Comment" onclick="LoadDisqus()"></div>');
+		</script>
+		<noscript>One needs to enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">disqus comments</a>.</noscript>
+	</div>
+{% endunless %}
+
+</div>
+
+
+

@@ -1,0 +1,29 @@
+---
+layout: default
+---
+
+<div class="main-content">
+
+<div class="module color-5">
+{{ content }}
+</div>
+
+<div class="module color-5">
+	<script type="text/javascript">
+		function LoadDisqus()
+		{
+			var btn = document.getElementById('disqus_loadbtn')
+			btn.parentElement.removeChild(btn);
+			document.getElementById('disqus_thread').style.display = "block";
+			var dsq = document.createElement('script');
+			dsq.type = 'text/javascript';
+			dsq.async = true;
+			dsq.src = '//zillalib.disqus.com/embed.js';
+			(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+		}
+		document.write('<div id="disqus_thread"></div><div id="disqus_loadbtn"><input type="button" value="Show Disqus Comments &middot; Add Comment" onclick="LoadDisqus()"></div>');
+	</script>
+	<noscript>One needs to enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">disqus comments</a>.</noscript>
+</div>
+
+</div>
