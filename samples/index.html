@@ -9,9 +9,12 @@ var snum = location.search.substr(1).replace(/\//g,''), data = GetData(Math.roun
 
 function Index()
 {
-	document.write('<h2>List of ZillaLib Samples</h2><divlist>');
+	var exp = (location.search.search(/exp/) >= 0);
+	document.write('<h2>List of ' + (exp ? 'Experimental ' : '') + 'ZillaLib Samples</h2>');
+	document.write('<p>See also list of <a href="/samples/' + (exp ? '">Regular' : '?exp">Experimental') + ' Samples</a></p><divlist>');
 	for (var i = 1, data = GetData(i); data; data = GetData(++i))
 	{
+		if (data.exp != exp) continue;
 		var si = ('0'+i).substr(-2);
 		document.write('<div style="float:left;width:296px;min-width:33%;max-width:100%;height:390px;border:1px solid black;padding:10px;text-align:center;margin:-1px 0 0 -1px;font-size:85%"><b>'+data.name+'</b><p>'+data.desc+'</p><a href="?'+si+'"><img src="ZillaLibSample-'+si+'.png" style="max-width:100%"></a><br><br><article><a href="?'+si+'">- Run in Web Browser -</a><br><a href="https://github.com/schellingb/ZillaLibSamples/blob/master/'+data.src+'">View Source</a><br><a href="ZillaLibSample-'+si+'_Win32.zip">Win32</a>/<a href="ZillaLibSample-'+si+'_Win64.zip">Win64</a>/<a href="ZillaLibSample-'+si+'.apk">Android</a><br><a href="ZillaLibSample-'+si+'_osx.zip">MacOSX</a>/<a href="ZillaLibSample-'+si+'_linux_x86_32.zip">Linux32</a>/<a href="ZillaLibSample-'+si+'_linux_x86_64.zip">Linux64</a></article></div>');
 	}
@@ -31,7 +34,8 @@ function Index()
 
 function Play(proj, data)
 {
-	document.write('<h2>Sample - ' + data.name + ' (<a href="/samples/">&larr; show all samples</a>)</h2><article>'
+	document.write('<h2>' + (data.exp ? 'Experimental ' : '') + 'Sample - ' + data.name + ' (<a href="/samples/' + (data.exp ? '?exp' : '') + '">&larr; show all samples</a>)</h2><article>'
+		+(data.exp ? '<p style="text-align:center">Experimental Samples probably require a special version of the library, check the <a href="https://github.com/schellingb/ZillaLib/branches">branches on github</a>!</p>' : '')
 		+'<div style="text-align:center">Downloads and source code can be found <a href="#links">Below</a></div>'
 		+'<hr>'
 		+'<h2 id="zl_status" style="text-align:center">Status: Loading...</h2>'
@@ -79,36 +83,37 @@ function Play(proj, data)
 function GetData(i)
 {
 	return [
-		{ 'src': '01-empty-game.inl',                        'name': 'Empty Game',                        'desc': 'A minimal empty game' },
-		{ 'src': '02-scene-manager-with-a-single-scene.inl', 'name': 'Scene Manager With A Single Scene', 'desc': 'Introduction to the scene manager' },
-		{ 'src': '03-scene-manager-with-two-scenes.inl',     'name': 'Scene Manager With Two Scenes',     'desc': 'Multiple scenes and transitions' },
-		{ 'src': '04-scene-manager-with-crossfade.inl',      'name': 'Scene Manager With Crossfade',      'desc': 'Nicer scene transitions' },
-		{ 'src': '05-2d-geometry-drawing.inl',               'name': '2D Geometry Drawing',               'desc': 'Drawing 2D shapes' },
-		{ 'src': '06-input-and-other-events.inl',            'name': 'Input And Other Events',            'desc': 'Listening to input and screen events' },
-		{ 'src': '07-surface-loading-and-drawing.inl',       'name': 'Surface Loading And Drawing',       'desc': 'Drawing images' },
-		{ 'src': '08-rotating-and-scaling-surfaces.inl',     'name': 'Rotating And Scaling Surfaces',     'desc': 'Rotation and scaling of images' },
-		{ 'src': '09-surface-batch-rendering.inl',           'name': 'Surface Batch Rendering',           'desc': 'Render the same texture a bunch of times' },
-		{ 'src': '10-surface-with-repeating-texture.inl',    'name': 'Surface With Repeating Texture',    'desc': 'Repeating instead of stretching' },
-		{ 'src': '11-tiled-texture-surfaces.inl',            'name': 'Tiled Texture Surfaces',            'desc': 'Usable for tile sets or animations' },
-		{ 'src': '12-font-rendering.inl',                    'name': 'Font Rendering',                    'desc': 'Various font rendering features' },
-		{ 'src': '13-easing.inl',                            'name': 'Easing',                            'desc': 'For adding bounciness and other juicy effects' },
-		{ 'src': '14-timer.inl',                             'name': 'Timer',                             'desc': 'Call functions or change values over time' },
-		{ 'src': '15-collision-tests.inl',                   'name': 'Collision Tests',                   'desc': 'Demonstrating various 2D collision checks' },
-		{ 'src': '16-post-process-effect.inl',               'name': 'Post Process Effect',               'desc': 'Full screen effect shaders' },
-		{ 'src': '17-surface-shader.inl',                    'name': 'Surface Shader',                    'desc': 'Single surface fragment and vertex shaders' },
-		{ 'src': '18-render-clipping.inl',                   'name': 'Render Clipping',                   'desc': 'Temporarily limit rendering to a screen rectangle' },
-		{ 'src': '19-render-to-texture.inl',                 'name': 'Render To Texture',                 'desc': 'Draw onto a surface and change it over time' },
-		{ 'src': '20-sound-samples.inl',                     'name': 'Sound Samples',                     'desc': 'Play back basic sound wave files' },
-		{ 'src': '21-ImcSynthesizer-Sound.inl',              'name': 'ImcSynthesizer Sound',              'desc': 'Built in synthesizer that plays from source code' },
-		{ 'src': '22-particles.inl',                         'name': 'Particles',                         'desc': 'Demonstrating basic 2D particle effects' },
-		{ 'src': '23-networking-clientserver.inl',           'name': 'Networking Client/Server',          'desc': 'Hosting server, connecting client, data transfers' },
-		{ 'src': '24-networking-http.inl',                   'name': 'Networking HTTP',                   'desc': 'Doing simple HTTP web server requests' },
-		{ 'src': '25-saving-loading-settings.inl',           'name': 'Saving Loading Settings',           'desc': 'Platform independent settings storage' },
-		{ 'src': '26-open-web-link.inl',                     'name': 'Open Web Link',                     'desc': 'Opening an URL in the browser' },
-		{ 'src': '27-json-read-write.inl',                   'name': 'JSON Reader and Writer',            'desc': 'Sample of how to read and write JSON formatted data' },
-		{ 'src': '28-advanced-polygon.inl',                  'name': 'Advanced Polygon Usage',            'desc': 'Polygons with multi contours and extrusion' },
-		{ 'src': '29-blend-modes.inl',                       'name': 'Blend Modes Visualizer',            'desc': 'Tool to visualize all kinds of blending modes' },
-		{ 'src': '30-simple-game.inl',                       'name': 'Simple Game',                       'desc': 'A simple game showing off various features' }
+		{ 'src': '01-empty-game.inl',                        'name': 'Empty Game',                        'exp': 0, 'desc': 'A minimal empty game' },
+		{ 'src': '02-scene-manager-with-a-single-scene.inl', 'name': 'Scene Manager With A Single Scene', 'exp': 0, 'desc': 'Introduction to the scene manager' },
+		{ 'src': '03-scene-manager-with-two-scenes.inl',     'name': 'Scene Manager With Two Scenes',     'exp': 0, 'desc': 'Multiple scenes and transitions' },
+		{ 'src': '04-scene-manager-with-crossfade.inl',      'name': 'Scene Manager With Crossfade',      'exp': 0, 'desc': 'Nicer scene transitions' },
+		{ 'src': '05-2d-geometry-drawing.inl',               'name': '2D Geometry Drawing',               'exp': 0, 'desc': 'Drawing 2D shapes' },
+		{ 'src': '06-input-and-other-events.inl',            'name': 'Input And Other Events',            'exp': 0, 'desc': 'Listening to input and screen events' },
+		{ 'src': '07-surface-loading-and-drawing.inl',       'name': 'Surface Loading And Drawing',       'exp': 0, 'desc': 'Drawing images' },
+		{ 'src': '08-rotating-and-scaling-surfaces.inl',     'name': 'Rotating And Scaling Surfaces',     'exp': 0, 'desc': 'Rotation and scaling of images' },
+		{ 'src': '09-surface-batch-rendering.inl',           'name': 'Surface Batch Rendering',           'exp': 0, 'desc': 'Render the same texture a bunch of times' },
+		{ 'src': '10-surface-with-repeating-texture.inl',    'name': 'Surface With Repeating Texture',    'exp': 0, 'desc': 'Repeating instead of stretching' },
+		{ 'src': '11-tiled-texture-surfaces.inl',            'name': 'Tiled Texture Surfaces',            'exp': 0, 'desc': 'Usable for tile sets or animations' },
+		{ 'src': '12-font-rendering.inl',                    'name': 'Font Rendering',                    'exp': 0, 'desc': 'Various font rendering features' },
+		{ 'src': '13-easing.inl',                            'name': 'Easing',                            'exp': 0, 'desc': 'For adding bounciness and other juicy effects' },
+		{ 'src': '14-timer.inl',                             'name': 'Timer',                             'exp': 0, 'desc': 'Call functions or change values over time' },
+		{ 'src': '15-collision-tests.inl',                   'name': 'Collision Tests',                   'exp': 0, 'desc': 'Demonstrating various 2D collision checks' },
+		{ 'src': '16-post-process-effect.inl',               'name': 'Post Process Effect',               'exp': 0, 'desc': 'Full screen effect shaders' },
+		{ 'src': '17-surface-shader.inl',                    'name': 'Surface Shader',                    'exp': 0, 'desc': 'Single surface fragment and vertex shaders' },
+		{ 'src': '18-render-clipping.inl',                   'name': 'Render Clipping',                   'exp': 0, 'desc': 'Temporarily limit rendering to a screen rectangle' },
+		{ 'src': '19-render-to-texture.inl',                 'name': 'Render To Texture',                 'exp': 0, 'desc': 'Draw onto a surface and change it over time' },
+		{ 'src': '20-sound-samples.inl',                     'name': 'Sound Samples',                     'exp': 0, 'desc': 'Play back basic sound wave files' },
+		{ 'src': '21-ImcSynthesizer-Sound.inl',              'name': 'ImcSynthesizer Sound',              'exp': 0, 'desc': 'Built in synthesizer that plays from source code' },
+		{ 'src': '22-particles.inl',                         'name': 'Particles',                         'exp': 0, 'desc': 'Demonstrating basic 2D particle effects' },
+		{ 'src': '23-networking-clientserver.inl',           'name': 'Networking Client/Server',          'exp': 0, 'desc': 'Hosting server, connecting client, data transfers' },
+		{ 'src': '24-networking-http.inl',                   'name': 'Networking HTTP',                   'exp': 0, 'desc': 'Doing simple HTTP web server requests' },
+		{ 'src': '25-saving-loading-settings.inl',           'name': 'Saving Loading Settings',           'exp': 0, 'desc': 'Platform independent settings storage' },
+		{ 'src': '26-open-web-link.inl',                     'name': 'Open Web Link',                     'exp': 0, 'desc': 'Opening an URL in the browser' },
+		{ 'src': '27-json-read-write.inl',                   'name': 'JSON Reader and Writer',            'exp': 0, 'desc': 'Sample of how to read and write JSON formatted data' },
+		{ 'src': '28-advanced-polygon.inl',                  'name': 'Advanced Polygon Usage',            'exp': 0, 'desc': 'Polygons with multi contours and extrusion' },
+		{ 'src': '29-blend-modes.inl',                       'name': 'Blend Modes Visualizer',            'exp': 0, 'desc': 'Tool to visualize all kinds of blending modes' },
+		{ 'src': '30-simple-game.inl',                       'name': 'Simple Game',                       'exp': 0, 'desc': 'A simple game showing off various features' },
+		{ 'src': '31-basic-3d.inl',                          'name': 'Basic 3D',                          'exp': 1, 'desc': 'Basic example of rendering a 3D scene' }
 	][i-1];
 }
 </script>
