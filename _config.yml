@@ -1,7 +1,6 @@
 name: ZillaLib
 description: "Sleek multiplatform C++ 2D game creation!"
 markdown: redcarpet
-pygments: true
 paginate: 5
 permalink: /:title
 rss-feed-limit: 10
