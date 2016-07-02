@@ -54,7 +54,7 @@ function Play(proj, data)
 	{
 		var xhr = new XMLHttpRequest();
 		xhr.open('GET', 'https://raw.githubusercontent.com/schellingb/ZillaLibSamples/master/' + data.src, true);
-		xhr.onload = function() { document.getElementById('zl_source').innerHTML = prettyPrintOne(xhr.response, 'cpp'); };
+		xhr.onload = function() { document.getElementById('zl_source').innerHTML = prettyPrintOne(xhr.response.replace(/</, '&lt;').replace(/>/, '&gt;'), 'cpp'); };
 		xhr.send();
 
 		var doStatus = function(msg)
