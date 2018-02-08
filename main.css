@@ -141,6 +141,8 @@ p { line-height: 1.4; }
 	.main-content a { color: #526f8c; }
 	.main-content a:hover, .main-content a:focus { color: #228cd2; }
 
+	.main-content li { margin-left: 25px; }
+
 .category {
 	color: #ccc;
 	position: absolute;
