@@ -2,19 +2,31 @@
 layout: commentable
 title: Project Generator
 ---
+<script src="project-generator.js"></script>
+
 <h1>Project Generator</h1>
 <hr>
 <table cellspacing="0" class="tabheader"><tbody><tr>
-<td width="50%" class="activetab" id="ziptabnew" onclick="document.getElementById('ziptabnew').className = 'tab activetab'; document.getElementById('ziptabexi').className = 'tab inactivetab'; document.getElementById('zipnew1').style.display = ''; document.getElementById('zipexi1').style.display = 'none'; document.getElementById('zipmode').value = 'NEW';">CREATE NEW PROJECT</td>
-<td width="50%" class="inactivetab" id="ziptabexi" onclick="document.getElementById('ziptabexi').className = 'tab activetab'; document.getElementById('ziptabnew').className = 'tab inactivetab'; document.getElementById('zipexi1').style.display = ''; document.getElementById('zipnew1').style.display = 'none'; document.getElementById('zipmode').value = 'EXI';">UPDATE EXISTING PROJECT</td>
+<td width="50%" class="activetab"   id="ziptabnew" onclick="document.getElementById('ziptabnew').className = 'tab activetab'; document.getElementById('ziptabexi').className = 'tab inactivetab'; document.getElementById('zipnew1').style.display = ''; document.getElementById('zipexi1').style.display = document.getElementById('zipexi2').style.display = 'none'; document.getElementById('zipmode').value = 'NEW';">CREATE NEW PROJECT</td>
+<td width="50%" class="inactivetab" id="ziptabexi" onclick="document.getElementById('ziptabexi').className = 'tab activetab'; document.getElementById('ziptabnew').className = 'tab inactivetab'; document.getElementById('zipexi1').style.display = document.getElementById('zipexi2').style.display = ''; document.getElementById('zipnew1').style.display = 'none'; document.getElementById('zipmode').value = 'EXI';">UPDATE EXISTING PROJECT</td>
 </tr></tbody></table>
 
-<form action="http://zillalib.nukular.ch/zip" method="POST" enctype="multipart/form-data" id="zip"><input type="hidden" id="zipmode" name="zipmode" value="NEW">
+<form id="zip" action="#" onsubmit="try{generate_project_zip(this)}catch(e){alert('Browser not supported')}return false;">
+<input type="hidden" id="zipmode" name="zipmode" value="NEW">
+<input type="hidden" id="vcprojguid" name="vcprojguid" value="">
+
+<div id="zipexi1" style="display:none;margin-bottom:10px">
+<h2 style="margin-top:0">Update from existing project file</h2>
+<div>
+<label for="add_oldprojfile" class="ta">Optional: Upload old project file to rebuild (.vcxproj or .pbxproj file):</label>
+<input type="file" name="add_oldprojfile" id="add_oldprojfile" onchange="try{parse_project_zip(this)}catch(e){alert('Browser not supported')}">
+</div>
+</div>
 
 <h2 style="margin-top:0">Basic Settings</h2>
 <div>
 <label for="proj">Project Name:</label>
-<input name="proj" id="proj" size="40" onchange="document.getElementById('package_dom').innerHTML = '.'+this.value.toLowerCase()" onkeyup="document.getElementById('package_dom').innerHTML = '.'+this.value.toLowerCase()">
+<input name="proj" id="proj" size="40" onchange="document.getElementById('package_dom').innerHTML = '.'+this.value.toLowerCase()" onkeyup="this.onchange()">
 <span class="txt">(No spaces, no special characters)</span>
 </div>
 <div>
@@ -127,25 +139,21 @@ title: Project Generator
 </td></tr></table>
 </div>
 
-<div id="zipexi1" style="display: none">
+<div id="zipexi2" style="display: none">
 <h2>Additional Files and Directories</h2>
 <div>
-<label for="add_assetdirs" class="ta">Additional Binary Asset Directories:</label>
-<textarea rows="4" cols="60" name="add_assetdirs" id="add_assetdirs"></textarea>
+<label for="add_assets" class="ta">Additional Binary Asset Directories and Files:</label>
+<textarea rows="4" cols="60" name="add_assets" id="add_assets"></textarea>
 </div>
 <div>
-<label for="add_srcfiles" class="ta">Additional Source Files To be Included in Projects:</label>
+<label for="add_srcfiles" class="ta">Additional Source Files:</label>
 <textarea rows="4" cols="60" name="add_srcfiles" id="add_srcfiles"></textarea>
 </div>
-<div>
-<label for="add_oldprojfile" class="ta">Alternative, upload old vcxproj file to rebuild:</label>
-<input type="file" name="add_oldprojfile" id="add_oldprojfile"></textarea>
-</div>
 
 </div>
 
-<h2>Download</h2>
-
-<div align="center"><input type="submit" class="submit" name="dozip" value=" Create and Download Project Archive (ZIP) "></div>
+<h2>Generate</h2>
+<div align="center"><input type="submit" class="submit" value=" Generate and Save Project Archive (ZIP) "></div>
+<sub>This generator runs locally in pure JavaScript, it does not upload to any server.</sub>
 
 </form>

@@ -227,8 +227,10 @@ table {
 	table tr:nth-child(odd) { background: #f2f2f2; }
 	table tr:nth-child(even)  { background: #e1e1e1; }
 
-	divlist div:nth-child(odd) { background: #f2f2f2; }
-	divlist div:nth-child(even)  { background: #e1e1e1; }
+	.divlist { overflow: hidden; }
+	.divlist div { float:left;width:296px;min-width:33%;max-width:100%;height:390px;border:1px solid black;padding:10px;text-align:center;margin:-1px 0 0 -1px;font-size:85% }
+	.divlist div:nth-child(odd) { background: #f2f2f2; }
+	.divlist div:nth-child(even)  { background: #e1e1e1; }
 
 /* ------------------------------------------------------------------------
 -  disqus -
@@ -380,3 +382,4 @@ form#zip span.chk { padding-left:10px; }
 form#zip label.ta { float:none; width:auto; display:block; margin-right:0; }
 form#zip textarea { width:99%; }
 form#zip .submit { margin:0 0 10px 0; padding:3px 10px; font-size:150%; }
+form#zip sub { display: block; color: #666; text-align: center; }
