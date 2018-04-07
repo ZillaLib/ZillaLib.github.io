@@ -160,7 +160,7 @@ hr {
 article a {
 	border-bottom: .125em solid #ccc;
 	display: inline;
-	padding: 0 0 .15em 0;
+	padding: 0 0 .02em 0;
 }
 
 	article a:hover, article p a:active {
@@ -179,35 +179,12 @@ article a {
 
 	article img {
 		height: auto;
-		max-width: 100%;
-		max-height: 25em;
-		border: 1px solid #777;
-		border-radius: 10px;
-		box-shadow: 2px 2px 0 0 #bbb;
-		padding: 10px;
-		display: block;
+		max-width: 200px;
+		padding: 0 10px 10px;
+		float: left;
 	}
 
-	article a img + legend {
-		padding: 0 0.5em;
-		background: #f2f2f2;
-		display: table;
-		position: relative;
-		top: -0.14em;
-		left: 1.8em;
-		height: 1.3em;
-		line-height: 0.35em;
-		color:#212121;
-	}
-
-	article a:hover img, article a:focus img, article a:active img {
-		border-color: #269;
-		box-shadow: 3px 3px 0 0 #9ac;
-	}
-
-	article a:hover img + legend, article a:focus img + legend, article a:active img + legend {
-		color: #269;
-	}
+	article li { clear: both; }
 
 /* ------------------------------------------------------------------------
 -  Tables -
@@ -248,9 +225,11 @@ table {
 -  Blockquote, code, pre. -
 -------------------------------------------------------------------------*/
 pre, code {
-	font-size: 0.80em;
-	line-height: 1.3em;
-	padding: 0.5em;
+	padding: 0.1em 0.3em;
+	word-wrap: break-word;
+	top: -1px;
+	position: relative;
+	background-color: #C0C0C040;
 }
 
 blockquote {
