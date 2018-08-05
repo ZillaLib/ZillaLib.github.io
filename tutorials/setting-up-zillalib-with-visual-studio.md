@@ -1,6 +1,6 @@
 ---
-layout: article
-title: Tutorial: Setting up ZillaLib with Visual Studio
+layout: post
+title: "Tutorial: Setting up ZillaLib with Visual Studio"
 ---
 
 The recommended way of writing code, testing and debugging is on a Windows PC with Visual Studio.
