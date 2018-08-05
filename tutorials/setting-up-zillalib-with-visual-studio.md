@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: article
 title: Tutorial: Setting up ZillaLib with Visual Studio
 ---
 
