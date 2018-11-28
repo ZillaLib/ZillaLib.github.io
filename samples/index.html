@@ -4,7 +4,7 @@ title: Samples
 ---
 <script type="text/javascript">
 
-var snum = location.search.substr(1).replace(/\//g,''), data = GetData(Math.round(snum));
+var snum = location.search.substr(1).replace(/\//g,''), data = GetData(Math.round(snum)), dlbase = 'https://github.com/schellingb/ZillaLibSamples/releases/download/bin/';
 (snum.length == 2 && data ? Play('ZillaLibSample-' + snum, data) : Index());
 
 function Index()
@@ -14,19 +14,19 @@ function Index()
 	{
 		var c = data.cat, si = data.src.substr(0, 2);
 		if (!idx[c]) { idx[c] = '<li><a href="#'+c+'">'+c+'</a></li>'; src[c] = '<hr><h2><a name="'+c+'"></a>'+c+'</h2><div class="divlist">'; }
-		src[c] += '<div><b>'+data.name+'</b><p>'+data.desc+'</p><a href="?'+si+'"><img src="ZillaLibSample-'+si+'.png" style="max-width:100%"></a><br><br><article><a href="?'+si+'">- Run in Web Browser -</a><br><a href="https://github.com/schellingb/ZillaLibSamples/blob/master/'+data.src+'">View Source</a><br><a href="ZillaLibSample-'+si+'_Win32.zip">Win32</a>/<a href="ZillaLibSample-'+si+'_Win64.zip">Win64</a>/<a href="ZillaLibSample-'+si+'.apk">Android</a><br><a href="ZillaLibSample-'+si+'_osx.zip">MacOSX</a>/<a href="ZillaLibSample-'+si+'_linux_x86_32.zip">Linux32</a>/<a href="ZillaLibSample-'+si+'_linux_x86_64.zip">Linux64</a></article></div>';
+		src[c] += '<div><b>'+data.name+'</b><p>'+data.desc+'</p><a href="?'+si+'"><img src="ZillaLibSample-'+si+'.png" style="max-width:100%"></a><br><br><article><a href="?'+si+'">- Run in Web Browser -</a><br><a href="https://github.com/schellingb/ZillaLibSamples/blob/master/'+data.src+'">View Source</a><br><a href="'+dlbase+'ZillaLibSample-'+si+'_Win32.zip">Win32</a>/<a href="'+dlbase+'ZillaLibSample-'+si+'_Win64.zip">Win64</a>/<a href="'+dlbase+'ZillaLibSample-'+si+'.apk">Android</a><br><a href="'+dlbase+'ZillaLibSample-'+si+'_osx.zip">macOS</a>/<a href="'+dlbase+'ZillaLibSample-'+si+'_linux_x86_32.zip">Linux32</a>/<a href="'+dlbase+'ZillaLibSample-'+si+'_linux_x86_64.zip">Linux64</a></article></div>';
 	}
 	document.write('<h2>List of ZillaLib Samples</h2>');
 	for (var c in idx) document.write(idx[c]);
 	for (var c in idx) document.write(src[c] + '</div>');
 
 	//var md = '# List of ZillaLib Samples\n\nSample repository for the [ZillaLib](https://github.com/schellingb/ZillaLib) game creation C++ framework.\n\n&amp;nbsp;|||\n:---:|:---:|:---:|\n';
-	//for (var urlbase = 'https://zillalib.github.io/samples/', urlsrc = 'https://github.com/schellingb/ZillaLibSamples/blob/master/', i = 1, data = GetData(i); data; data = GetData(++i))
+	//for (var webbase = 'https://zillalib.github.io/samples/', urlsrc = 'https://github.com/schellingb/ZillaLibSamples/blob/master/', i = 1, data = GetData(i); data; data = GetData(++i))
 	//{
-	//	var si = data.src.substr(0, 2), urlproj = urlbase+'ZillaLibSample-'+si, urlrun = urlbase+'?'+si;
-	//	md += (((i-1)%3)?'|':'') + '**'+data.name+'**<p>'+data.desc+'</p>[<img src="'+urlproj+'.png">]('+urlrun+')<br>[- Run in Web Browser -]('+urlrun+')<br>'
-	//		+'[Win32]('+urlproj+'_Win32.zip)/[Win64]('+urlproj+'_Win64.zip)/[Android]('+urlproj+'.apk)<br>'
-	//		+'[MacOSX]('+urlproj+'_osx.zip)/[Linux32]('+urlproj+'_linux_x86_32.zip)/[Linux64]('+urlproj+'_linux_x86_64.zip)<br>[View Source]('+urlsrc+data.src+')'
+	//	var si = data.src.substr(0, 2), proj = 'ZillaLibSample-'+si, urlrun = webbase+'?'+si, urldl = dlbase+proj;
+	//	md += (((i-1)%3)?'|':'') + '**'+data.name+'**<p>'+data.desc+'</p>[<img src="'+webbase+proj+'.png">]('+urlrun+')<br>[- Run in Web Browser -]('+urlrun+')<br>'
+	//		+'[Win32]('+urldl+'_Win32.zip)/[Win64]('+urldl+'_Win64.zip)/[Android]('+urldl+'.apk)<br>'
+	//		+'[macOS]('+urldl+'_osx.zip)/[Linux32]('+urldl+'_linux_x86_32.zip)/[Linux64]('+urldl+'_linux_x86_64.zip)<br>[View Source]('+urlsrc+data.src+')'
 	//		+((((i-1)%3)==2) ? '\n' : '');
 	//}
 	//document.write('<textarea style="width:100%;height:500px">'+md+'</textarea>');
@@ -35,7 +35,7 @@ function Index()
 function Play(proj, data)
 {
 	document.write('<h2>' + (data.exp ? 'Experimental ' : '') + 'Sample - ' + data.name + ' (<a href="/samples/' + (data.exp ? '?exp' : '') + '#' + data.cat + '">&larr; show all samples</a>)</h2><article>'
-		+(data.exp ? '<p style="text-align:center">Experimental Samples probably require a special version of the library, check the <a href="https://github.com/schellingb/ZillaLib/branches">branches on github</a>!</p>' : '')
+		+(data.exp ? '<p style="text-align:center">Experimental Samples probably require a special version of the library, check the <a href="https://github.com/schellingb/ZillaLib/branches">branches on GitHub</a>!</p>' : '')
 		+'<div style="text-align:center">Downloads and source code can be found <a href="#links">Below</a></div>'
 		+'<hr>'
 		+'<h2 id="zl_status" style="text-align:center">Status: Loading...</h2>'
@@ -43,8 +43,8 @@ function Play(proj, data)
 		+'<div id="zl_popup" style="text-align:center;position:absolute;top:300px;left:0;width:99%;z-index:9;display:none"><div id="zl_popupmsg" style="width:500px;margin:0 auto;padding:20px 10px;background:#444;color:#DDD;border:1px solid white">Please open the following link in a new window to continue<br><br><a id="zl_popup_a" target="_blank" style="color:#88D"></a><br><br><input type="button" value="CLOSE THIS" onclick="document.getElementById(\'zl_popup\').style.display = \'none\'"></div></div>'
 		+'<hr>'
 		+'<a name="links"></a><div><p>Downloads: '
-			+'<a href="'+proj+'_Win32.zip">Win32</a> &middot; <a href="'+proj+'_Win64.zip">Win64</a> &middot; <a href="'+proj+'.apk">Android</a> &middot; '
-			+'<a href="'+proj+'_osx.zip">MacOSX</a> &middot; <a href="'+proj+'_linux_x86_32.zip">Linux32</a> &middot; <a href="'+proj+'_linux_x86_64.zip">Linux64</a></p></div>'
+			+'<a href="'+dlbase+proj+'_Win32.zip">Win32</a> &middot; <a href="'+dlbase+proj+'_Win64.zip">Win64</a> &middot; <a href="'+dlbase+proj+'.apk">Android</a> &middot; '
+			+'<a href="'+dlbase+proj+'_osx.zip">macOS</a> &middot; <a href="'+dlbase+proj+'_linux_x86_32.zip">Linux32</a> &middot; <a href="'+dlbase+proj+'_linux_x86_64.zip">Linux64</a></p></div>'
 		+'<pre id="zl_source" style="margin-top:40px;background:rgba(0,0,0,.5);overflow:scroll;font-size:75%"></pre>'
 		+'<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/google/code-prettify/master/styles/desert.css">'
 		+'<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/prettify.js"></'+'script>'
