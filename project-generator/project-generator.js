@@ -1490,19 +1490,19 @@ function generate_project_zip(form)
 			pbx += '			if [ \\"$CONFIGURATION\\" != \\"Release\\" ]; then exit; fi #only perform in Release builds'+nl;
 			pbx += '			$TOOLCHAIN_DIR/usr/bin/strip $TARGET_BUILD_DIR/$EXECUTABLE_PATH #manual strip because regular strip can\'t run after appending zip'+nl;
 			pbx += '			cd $TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH'+nl;
-			pbx += '			zip -0 -m -r - * -x AppIcon.icns | cat >> $TARGET_BUILD_DIR/$EXECUTABLE_PATH'+nl;
+			pbx += '			zip -0 -m -r - * -x AppIcon.icns -x Assets.car | cat >> $TARGET_BUILD_DIR/$EXECUTABLE_PATH'+nl;
 			pbx += '		"; };'+nl;
 		}
 		pbx += ''+nl;
 		if (xver == 'iOS')
 		{
-			pbx += '	D01001 = { isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_IDENTITY = "iPhone Developer"; "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer"; PROVISIONING_PROFILE = ""; }; name = Debug; };'+nl;
-			pbx += '	D01002 = { isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_IDENTITY = "iPhone Distribution"; "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer"; PROVISIONING_PROFILE = ""; }; name = Release; };'+nl;
+			pbx += '	D01001 = { isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_IDENTITY = "iPhone Developer"; "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer"; PROVISIONING_PROFILE = ""; PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_BUNDLE_IDENTIFIER}"; CLANG_ENABLE_OBJC_WEAK = YES; }; name = Debug; };'+nl;
+			pbx += '	D01002 = { isa = XCBuildConfiguration; buildSettings = { CODE_SIGN_IDENTITY = "iPhone Distribution"; "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer"; PROVISIONING_PROFILE = ""; PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_BUNDLE_IDENTIFIER}"; CLANG_ENABLE_OBJC_WEAK = YES; }; name = Release; };'+nl;
 		}
 		else
 		{
-			pbx += '	D01001 = { isa = XCBuildConfiguration; buildSettings = {}; name = Debug; };'+nl;
-			pbx += '	D01002 = { isa = XCBuildConfiguration; buildSettings = {}; name = Release; };'+nl;
+			pbx += '	D01001 = { isa = XCBuildConfiguration; buildSettings = { CLANG_ENABLE_OBJC_WEAK = YES; PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_BUNDLE_IDENTIFIER}"; }; name = Debug; };'+nl;
+			pbx += '	D01002 = { isa = XCBuildConfiguration; buildSettings = { CLANG_ENABLE_OBJC_WEAK = YES; PRODUCT_BUNDLE_IDENTIFIER = "${PRODUCT_BUNDLE_IDENTIFIER}"; }; name = Release; };'+nl;
 		}
 		pbx += ''+nl;
 		pbx += '	D02001 = { isa = XCBuildConfiguration; buildSettings = {'+nl;
@@ -1513,6 +1513,7 @@ function generate_project_zip(form)
 		pbx += '			HEADER_SEARCH_PATHS = '+zillalibbase+'/Include;'+nl;
 		pbx += '			OTHER_CFLAGS = ( "-DDEBUG", "-D_DEBUG", "-DZILLALOG" );'+nl;
 		pbx += '			CLANG_CXX_LANGUAGE_STANDARD = "c++0x";'+nl;
+		if (xver == 'OSX') pbx += '			CLANG_CXX_LIBRARY = "libc++";'+nl;
 		pbx += '			GCC_PREPROCESSOR_DEFINITIONS = $CmdLinePreprocessorDefinitions;'+nl;
 		pbx += '			GCC_ENABLE_CPP_EXCEPTIONS = NO;'+nl;
 		pbx += '			GCC_ENABLE_CPP_RTTI = NO;'+nl;
@@ -1523,14 +1524,12 @@ function generate_project_zip(form)
 		if (xver == 'iOS')
 		{
 			pbx += '			CODE_SIGN_IDENTITY = "iPhone Developer";'+nl;
-			pbx += '			ARCHS = armv7;'+nl;
-			pbx += '			VALID_ARCHS = "armv7 i386";'+nl;
-			pbx += '			IPHONEOS_DEPLOYMENT_TARGET = 4.3;'+nl;
+			pbx += '			IPHONEOS_DEPLOYMENT_TARGET = 8.0;'+nl;
 			pbx += '			TARGETED_DEVICE_FAMILY = "1,2";'+nl;
 			pbx += '			IPHONE_OPTIMIZE_OPTIONS = "-skip-PNGs";'+nl;
 			pbx += '			ENABLE_BITCODE = NO;'+nl;
 		}
-		if (xver == 'OSX') pbx += '			MACOSX_DEPLOYMENT_TARGET = 10.5;'+nl;
+		if (xver == 'OSX') pbx += '			MACOSX_DEPLOYMENT_TARGET = 10.7;'+nl;
 		pbx += '			SDKROOT = '+(xver == 'iOS' ? 'iphoneos' : 'macosx')+';'+nl;
 		pbx += '			OBJROOT = "'+proj+'-'+xver+'.xcodeproj/Debug";'+nl;
 		pbx += '			SYMROOT = "'+proj+'-'+xver+'.xcodeproj/Debug";'+nl;
@@ -1538,6 +1537,8 @@ function generate_project_zip(form)
 		pbx += '			CONFIGURATION_BUILD_DIR = "'+proj+'-'+xver+'.xcodeproj/Debug";'+nl;
 		pbx += '			CONFIGURATION_TEMP_DIR = "'+proj+'-'+xver+'.xcodeproj/Debug";'+nl;
 		pbx += '			SHARED_PRECOMPS_DIR = "'+proj+'-'+xver+'.xcodeproj/Debug";'+nl;
+		pbx += '			ALWAYS_SEARCH_USER_PATHS = NO;'+nl;
+		pbx += '			ENABLE_TESTABILITY = YES;'+nl;
 		pbx += '		}; name = Debug; };'+nl;
 		pbx += ''+nl;
 		pbx += '	D02002 = { isa = XCBuildConfiguration; buildSettings = {'+nl;
@@ -1548,6 +1549,7 @@ function generate_project_zip(form)
 		pbx += '			HEADER_SEARCH_PATHS = '+zillalibbase+'/Include;'+nl;
 		pbx += '			OTHER_CFLAGS = ( "-DNDEBUG", "-fvisibility=hidden", "-ffunction-sections", "-fdata-sections" );'+nl;
 		pbx += '			CLANG_CXX_LANGUAGE_STANDARD = "c++0x";'+nl;
+		if (xver == 'OSX') pbx += '			CLANG_CXX_LIBRARY = "libc++";'+nl;
 		pbx += '			GCC_PREPROCESSOR_DEFINITIONS = $CmdLinePreprocessorDefinitions;'+nl;
 		pbx += '			GCC_ENABLE_CPP_EXCEPTIONS = NO;'+nl;
 		pbx += '			GCC_ENABLE_CPP_RTTI = NO;'+nl;
@@ -1556,15 +1558,13 @@ function generate_project_zip(form)
 		if (xver == 'iOS')
 		{
 			pbx += '			CODE_SIGN_IDENTITY = "iPhone Distribution";'+nl;
-			pbx += '			ARCHS = armv7;'+nl;
-			pbx += '			VALID_ARCHS = "armv7 i386";'+nl;
-			pbx += '			IPHONEOS_DEPLOYMENT_TARGET = 4.3;'+nl;
+			pbx += '			IPHONEOS_DEPLOYMENT_TARGET = 8.0;'+nl;
 			pbx += '			TARGETED_DEVICE_FAMILY = "1,2";'+nl;
 			pbx += '			IPHONE_OPTIMIZE_OPTIONS = "-skip-PNGs";'+nl;
 			pbx += '			ENABLE_BITCODE = NO;'+nl;
 		}
 		pbx += '			STRIP_INSTALLED_PRODUCT = '+(xver == 'OSX' && assets_embed ? 'NO' : 'YES')+';'+nl;
-		if (xver == 'OSX') pbx += '			MACOSX_DEPLOYMENT_TARGET = 10.5;'+nl;
+		if (xver == 'OSX') pbx += '			MACOSX_DEPLOYMENT_TARGET = 10.7;'+nl;
 		pbx += '			SDKROOT = '+(xver == 'iOS' ? 'iphoneos' : 'macosx')+';'+nl;
 		pbx += '			OBJROOT = "'+proj+'-'+xver+'.xcodeproj/Release";'+nl;
 		pbx += '			SYMROOT = "'+proj+'-'+xver+'.xcodeproj/Release";'+nl;
@@ -1572,6 +1572,7 @@ function generate_project_zip(form)
 		pbx += '			CONFIGURATION_BUILD_DIR = "'+proj+'-'+xver+'.xcodeproj/Release";'+nl;
 		pbx += '			CONFIGURATION_TEMP_DIR = "'+proj+'-'+xver+'.xcodeproj/Release";'+nl;
 		pbx += '			SHARED_PRECOMPS_DIR = "'+proj+'-'+xver+'.xcodeproj/Release";'+nl;
+		pbx += '			ALWAYS_SEARCH_USER_PATHS = NO;'+nl;
 		pbx += '		}; name = Release; };'+nl;
 		pbx += ''+nl;
 		pbx += '	E01000 = { isa = XCConfigurationList; buildConfigurations = (D01001,D01002); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };'+nl;
@@ -1591,7 +1592,7 @@ function generate_project_zip(form)
 		pbx += ''+nl;
 		pbx += '	F02000 = {'+nl;
 		pbx += '		isa = PBXProject;'+nl;
-		pbx += '		attributes = { LastUpgradeCheck = 0700; };'+nl;
+		pbx += '		attributes = { LastUpgradeCheck = 1010; };'+nl;
 		pbx += '		buildConfigurationList = E02000;'+nl;
 		pbx += '		compatibilityVersion = "Xcode 3.2";'+nl;
 		pbx += '		developmentRegion = English;'+nl;
