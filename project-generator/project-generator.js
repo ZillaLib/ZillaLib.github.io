@@ -1337,7 +1337,7 @@ function generate_project_zip(form)
 		plist += '<key>CFBundleVersion</key><string>1.0.0</string>'+nl;
 		plist += '<key>CFBundleShortVersionString</key><string>1.0.0</string>'+nl;
 		plist += '<key>CFBundleDisplayName</key><string>'+(proj == appname ? '${PRODUCT_NAME}' : appname)+'</string>'+nl;
-		plist += '<key>CFBundleIdentifier</key><string>${PRODUCT_BUNDLE_IDENTIFIER}</string>'+nl;
+		plist += '<key>CFBundleIdentifier</key><string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>'+nl;
 		plist += '<key>CFBundleInfoDictionaryVersion</key><string>6.0</string>'+nl;
 		plist += '<key>CFBundlePackageType</key><string>APPL</string>'+nl;
 		plist += '<key>CFBundleDevelopmentRegion</key><string>en</string>'+nl;
