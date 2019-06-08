@@ -35,7 +35,8 @@ function LoadZillaLibApp(container_div_name, bin_base, max_width, funcStatus, fu
 	max_width = Math.min(max_width, Math.max(screen.width, screen.height))
 	container.style.cssText = 'text-align:center';
 
-	if (!navigator.userAgent.match('Chrome/') || navigator.mimeTypes['application/x-pnacl'] == undefined)
+	var disable_nacl = true;
+	if (disable_nacl || !navigator.userAgent.match('Chrome/') || navigator.mimeTypes['application/x-pnacl'] == undefined)
 	{
 		var canvas = document.createElement('canvas');
 		canvas.style.cssText = 'width:100%;max-width:'+max_width+'px';
