@@ -37,11 +37,11 @@ function Play(proj, data)
 	document.write('<h2>' + (data.exp ? 'Experimental ' : '') + 'Sample - ' + data.name + ' (<a href="/samples/' + (data.exp ? '?exp' : '') + '#' + data.cat + '">&larr; show all samples</a>)</h2><article>'
 		+(data.exp ? '<p style="text-align:center">Experimental Samples probably require a special version of the library, check the <a href="https://github.com/schellingb/ZillaLib/branches">branches on GitHub</a>!</p>' : '')
 		+'<div style="text-align:center">Downloads and source code can be found <a href="#links">Below</a></div>'
-		+'<hr>'
+		+'<hr style="margin:20px">'
 		+'<h2 id="zl_status" style="text-align:center">Status: Loading...</h2>'
 		+'<div id="zl_container" style="text-align:center"></div>'
 		+'<div id="zl_popup" style="text-align:center;position:absolute;top:300px;left:0;width:99%;z-index:9;display:none"><div id="zl_popupmsg" style="width:500px;margin:0 auto;padding:20px 10px;background:#444;color:#DDD;border:1px solid white">Please open the following link in a new window to continue<br><br><a id="zl_popup_a" target="_blank" style="color:#88D"></a><br><br><input type="button" value="CLOSE THIS" onclick="document.getElementById(\'zl_popup\').style.display = \'none\'"></div></div>'
-		+'<hr>'
+		+'<hr style="margin:20px">'
 		+'<a name="links"></a><div><p>Downloads: '
 			+'<a href="'+dlbase+proj+'_Win32.zip">Win32</a> &middot; <a href="'+dlbase+proj+'_Win64.zip">Win64</a> &middot; <a href="'+dlbase+proj+'.apk">Android</a> &middot; '
 			+'<a href="'+dlbase+proj+'_osx.zip">macOS</a> &middot; <a href="'+dlbase+proj+'_linux_x86_32.zip">Linux32</a> &middot; <a href="'+dlbase+proj+'_linux_x86_64.zip">Linux64</a></p></div>'
