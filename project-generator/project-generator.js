@@ -1,6 +1,6 @@
 /*
   ZillaLib
-  Copyright (C) 2010-2018 Bernhard Schelling
+  Copyright (C) 2010-2019 Bernhard Schelling
 
   This software is provided 'as-is', without any express or implied
   warranty.  In no event will the authors be held liable for any damages
@@ -166,7 +166,8 @@ function generate_project_zip(form)
 
 	var gen_makefile    = form['gen_makefile'].checked;
 	var package_identifier = (package_identifier_base+'.'+proj.toLowerCase());
-	var android_targetsdk = (form['android_targetsdk'] && form['android_targetsdk'].value && (form['android_targetsdk'].value|0) ? (form['android_targetsdk'].value|0) : 15);
+	var android_targetsdk = (form['android_targetsdk'] && form['android_targetsdk'].value && (form['android_targetsdk'].value|0) ? (form['android_targetsdk'].value|0) : 29);
+	var android_abis = (form['android_abis'] && form['android_abis'].value ? form['android_abis'].value : 'armeabi-v7a arm64-v8a');
 	var smp_internet    = form['smp_internet'].checked;
 	var android_vibrate = form['android_vibrate'].checked;
 	var android_ads     = false;
@@ -1043,7 +1044,35 @@ function generate_project_zip(form)
 
 	if (for_vc6 || for_vc9 || for_vs)
 	{
-		var rc = 'ZL ICON DISCARDABLE "'+proj+'.ico"'+nl;
+		var rc = '#include <windows.h>'+nl;
+		rc += 'LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US'+nl;
+		rc += 'ZL ICON "'+proj+'.ico"'+nl;
+		rc += '1 VERSIONINFO'+nl;
+		rc += '	FILEVERSION     1,0,0,0'+nl;
+		rc += '	PRODUCTVERSION  1,0,0,0'+nl;
+		rc += '	FILEOS          VOS_NT_WINDOWS32'+nl;
+		rc += '	FILETYPE        VFT_APP'+nl;
+		rc += '{'+nl;
+		rc += '	BLOCK "StringFileInfo"'+nl;
+		rc += '	{'+nl;
+		rc += '		BLOCK "040904b0"'+nl;
+		rc += '		{'+nl;
+		rc += '			VALUE "FileDescription", "'+proj+'"'+nl;
+		rc += '			VALUE "FileVersion", "1.0"'+nl;
+		rc += '			VALUE "ProductName", "'+proj+'"'+nl;
+		rc += '			VALUE "ProductVersion", "1.0"'+nl;
+		rc += '			VALUE "InternalName", "'+proj+'"'+nl;
+		rc += '			VALUE "OriginalFilename", "'+proj+'.exe"'+nl;
+		rc += '			//VALUE "CompanyName", ""'+nl;
+		rc += '			//VALUE "LegalCopyright", "(C) '+(new Date().getYear()+1900)+'"'+nl;
+		rc += '		}'+nl;
+		rc += '	}'+nl;
+		rc += '	BLOCK "VarFileInfo"'+nl;
+		rc += '	{'+nl;
+		rc += '		VALUE "Translation", 0x409, 1252'+nl;
+		rc += '	}'+nl;
+		rc += '}'+nl;
+
 		zipAddTextFile(rc, ziproot+proj+'.rc');
 		rc = undefined;
 
@@ -1090,7 +1119,7 @@ function generate_project_zip(form)
 		and_mani += '	<'+(android_vibrate  ? '' : '!-- ')+'uses-permission android:name="android.permission.VIBRATE" /'+(android_vibrate  ? '' : ' --')+'>'+nl;
 		and_mani += '	<uses-feature android:glEsVersion="0x00020000" />'+nl;
 		and_mani += '	<uses-feature android:name="android.hardware.touchscreen" />'+nl;
-		and_mani += '	<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="'+android_targetsdk+'" />'+nl;
+		and_mani += '	<uses-sdk android:minSdkVersion="16" android:targetSdkVersion="'+android_targetsdk+'" />'+nl;
 		and_mani += '	<supports-screens android:anyDensity="true" android:resizeable="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true"></supports-screens>'+nl;
 		and_mani += '	<application android:label="'+appname+'" android:icon="@drawable/icon"'+nl;
 		and_mani += '			android:debuggable="false" android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">'+nl;
@@ -1110,17 +1139,12 @@ function generate_project_zip(form)
 		and_mani = undefined;
 
 		/**********************************************************************************************************************
-		* Android/project.properties
-		**********************************************************************************************************************/
-		var and_projprop = 'target=android-'+android_targetsdk+nl;
-		zipAddTextFile(and_projprop, ziproot+'Android/project.properties');
-		and_projprop = undefined;
-
-		/**********************************************************************************************************************
 		* Android/jni/Application.mk
 		**********************************************************************************************************************/
-		var and_appmk = '# APP_ABI := armeabi armeabi-v7a #enable on performance issues'+nl;
-		and_appmk += '# APP_OPTIM := debug # better set android:debuggable in manifest'+nl;
+		var and_appmk = '# This selects build targets for release builds'+nl;
+		and_appmk += '# Debug builds only build the first listed target'+nl;
+		and_appmk += '# Choose from armeabi-v7a arm64-v8a x86 x86_64 '+nl;
+		and_appmk += 'APP_ABI := '+android_abis+nl;
 		zipAddTextFile(and_appmk, ziproot+'Android/jni/Application.mk');
 		and_appmk = undefined;
 
@@ -1898,7 +1922,7 @@ function generate_project_zip(form)
 		zipAddTextFile(ignores.join('\n'), ziproot+'.gitignore');
 		ignores = undefined;
 		if (for_osx) zipAddTextFile('project.xcworkspace/\nxcuserdata/\nDebug/\nRelease/\n', ziproot+proj+'-OSX.xcodeproj/.gitignore');
-		if (for_android) zipAddTextFile('obj/\nlibs/\nbin/\n', ziproot+'Android/.gitignore');
+		if (for_android) zipAddTextFile('obj/\nbin/\n', ziproot+'Android/.gitignore');
 		if (for_ios) zipAddTextFile('project.xcworkspace/\nxcuserdata/\nDebug/\nRelease/\n', ziproot+proj+'-iOS.xcodeproj/.gitignore');
 		if (for_wp8) zipAddTextFile('*.suo\n*.user\n*.sdf\n*.opensdf\nRelease-Win32/\nRelease-ARM/\nDebug-Win32/\nDebug-ARM/\n', ziproot+'WP8/.gitignore');
 	}

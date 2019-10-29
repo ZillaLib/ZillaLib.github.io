@@ -355,7 +355,7 @@ td.activetab { border-bottom-color:#ddd!important; background-color:#ddd; }
 td.inactivetab { background-color:#888; }
 form#zip { width:800px; margin:0 auto; background:#DDD; padding:8px; border:2px solid black; border-top-width:0; font-size:80%; }
 form#zip a { color:#666; }
-form#zip h2 { font-size:14pt; font-family:sans-serif; text-align:center; background:#333; color:#FFF; margin-top:10px }
+form#zip h2 { font-size:14pt; font-family:sans-serif; text-align:center; background:#333; color:#FFF; margin: 15px 0 5px }
 form#zip div { clear:both; margin:3px 0; }
 form#zip label { float:left; width:180px; margin-right:10px; }
 form#zip span.txt { display:block; padding-left:190px; font-size:80%; color:#666; }

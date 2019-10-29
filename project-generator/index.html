@@ -47,10 +47,10 @@ title: Project Generator
 
 <h2>Target Projects</h2>
 <table width="100%"><tbody><tr valign="top"><td>
-<div><label for="for_vs">Visual Studio:</label><input type="checkbox" name="for_vs" id="for_vs" value="1" checked><span class="chk">(2012 - 2017)</span></div>
+<div><label for="for_vs">Visual Studio:</label><input type="checkbox" name="for_vs" id="for_vs" value="1" checked><span class="chk">(2012 - 2019)</span></div>
 <div><label for="for_vc9">Visual Studio 2010:</label><input type="checkbox" name="for_vc9" id="for_vc9" value="1"><span class="chk">(VC9)</span></div>
 <div><label for="for_vc6">Visual Studio 6.0:</label><input type="checkbox" name="for_vc6" id="for_vc6" value="1"><span class="chk">(VC6)</span></div>
-<div><label for="for_nacl">WebAssembly:</label><input type="checkbox" name="for_wasm" id="for_wasm" value="1" checked><span class="chk">(LLVM)</span></div>
+<div><label for="for_wasm">WebAssembly:</label><input type="checkbox" name="for_wasm" id="for_wasm" value="1" checked><span class="chk">(LLVM)</span></div>
 </td><td style="padding-left:20px;border-left:1px dotted #888">
 <div><label for="for_linux">Linux:</label><input type="checkbox" name="for_linux" id="for_linux" value="1" checked><span class="chk">(Makefile)</span></div>
 <div><label for="for_osx">Mac OS X:</label><input type="checkbox" name="for_osx" id="for_osx" value="1" checked><span class="chk">(Xcode)</span></div>
@@ -62,17 +62,7 @@ title: Project Generator
 <div>
 <label for="assets_embed">Generate Makefile:</label>
 <input type="checkbox" name="gen_makefile" id="gen_makefile" value="1">
-<span class="chk">Always on for Linux, but can also be used for all non Windows builds</span>
-</div>
-<div>
-<label for="smp_internet">Internet Permission:</label>
-<input type="checkbox" name="smp_internet" id="smp_internet" value="1">
-<span class="chk">If planning to use network sockets on Android</span>
-</div>
-<div>
-<label for="android_vibrate">Vibrate Permission:</label>
-<input type="checkbox" name="android_vibrate" id="android_vibrate" value="1">
-<span class="chk">If planning to use the smartphone vibration on Android</span>
+<span class="chk">Always on for Linux, but can also be used for all non-Windows builds</span>
 </div>
 <div>
 <label for="sc_gitignore">.gitignore Files:</label>
@@ -92,6 +82,47 @@ title: Project Generator
 <label for="assets_embed">Embed Assets in Binary:</label>
 <input type="checkbox" name="assets_embed" id="assets_embed" value="1" checked>
 <span class="chk">For PC & Web release builds, embed assets into executable file</span>
+</div>
+</div>
+
+<h2>Android</h2>
+<div>
+<label for="android_targetsdk">Use Target SDK:</label>
+<select name="android_targetsdk" id="android_targetsdk">
+<option value="29" selected>API level 29: Q (Android 10)
+<option value="28">API level 28: Pie (Android 9)
+<option value="27">API level 27: Oreo (Android 8.1.0)
+<option value="26">API level 26: Oreo (Android 8.0.0)
+<option value="25">API level 25: Nougat (Android 7.1)
+<option value="24">API level 24: Nougat (Android 7.0)
+<option value="23">API level 23: Marshmallow (Android 6.0)
+<option value="22">API level 22: Lollipop (Android 5.1)
+<option value="21">API level 21: Lollipop (Android 5.0)
+<option value="19">API level 19: KitKat (Android 4.4.x)
+<option value="18">API level 18: Jelly Bean (Android 4.3.x)
+<option value="17">API level 17: Jelly Bean (Android 4.2.x)
+<option value="16">API level 16: Jelly Bean (Android 4.1.x)
+</select>
+<div>
+<label for="android_abis">Build for ABIs:</label>
+<select name="android_abis" id="android_abis">
+<option value="armeabi-v7a arm64-v8a" selected>ARM 32bit | ARM 64 bit (most common devices)
+<option value="armeabi-v7a arm64-v8a x86 x86_64">ARM 32bit | ARM 64 bit | x86 32bit | x86 64bit (all)
+<option value="armeabi-v7a">ARM 32bit only (most common devices)
+<option value="arm64-v8a">ARM 64 bit only (newer devices)
+<option value="x86">x86 32bit (for 32bit Emulator)
+<option value="x86_64">x86 64bit (for 64bit Emulator)
+</select>
+</div>
+<div>
+<label for="smp_internet">Internet Permission:</label>
+<input type="checkbox" name="smp_internet" id="smp_internet" value="1">
+<span class="chk">If planning to use network sockets on Android</span>
+</div>
+<div>
+<label for="android_vibrate">Vibrate Permission:</label>
+<input type="checkbox" name="android_vibrate" id="android_vibrate" value="1">
+<span class="chk">If planning to use the smartphone vibration on Android</span>
 </div>
 </div>
 
