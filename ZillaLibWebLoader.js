@@ -33,10 +33,10 @@ function LoadZillaLibApp(container_div_name, bin_base, max_width, funcStatus, fu
 
 	var container = document.getElementById(container_div_name);
 	max_width = Math.min(max_width, Math.max(screen.width, screen.height))
-	container.style.cssText = 'text-align:center';
+	container.style.cssText = 'text-align:center;line-height:0';
 
 	var canvas = document.createElement('canvas');
-	canvas.style.cssText = 'width:100%;max-width:'+max_width+'px';
+	canvas.style.cssText = 'width:100%;max-width:'+max_width+'px;vertical-align:top';
 	canvas.oncontextmenu = function(e) { e.preventDefault() };
 	canvas.width = canvas.height = 0;
 	container.appendChild(canvas);
